@@ -2,7 +2,7 @@ from rest_framework import generics,status
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
-from .serializers import UserNewSerializer,ProfileSerializer
+from .serializers import UserNewSerializer,ProfileSerializer,DogSerializer
 from rest_framework.permissions import IsAuthenticated 
 from rest_framework.authentication import TokenAuthentication
 
@@ -48,19 +48,58 @@ class Profile(generics.GenericAPIView):
 
     serializer_class = ProfileSerializer
 
-    def post(self,request, format=None):
+    def post(self,request):
         # print(request.auth.key)
         # data = request.data.copy()
         # data['token'] = request.auth.key
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-            profile_data = serializer.add_profile(validated_data=request.data)
+            data = serializer.add_profile(validated_data=request.data)
             response_data = { 
-                'message': 'Profile Updated.' 
+                'message': 'Profile Updated.'
                 }
             return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class Dog(generics.GenericAPIView):
+    authentication_classes = [TokenAuthentication] 
+    permission_classes = [IsAuthenticated]
+    serializer_class = DogSerializer
+    def post(self,request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            new_dog=serializer.add_dog(validated_data=request.data)
+            response_data = { 
+                'message': 'dog Added.',
+                'data': DogSerializer(new_dog).data
+                }
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def patch(self,request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            updated_dog=serializer.update_dog(validated_data=request.data)
+            # print(data)
+            response_data = { 
+                'message': 'dog Updated.',
+                'data': DogSerializer(updated_dog).data
+                }
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self,request):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            deleted_dog = serializer.delete_dog(validated_data=request.data)
+            # print(DogSerializer(deleted_dog).data)
+            response_data = { 
+                'message': 'dog Deleted.',
+                'data': DogSerializer(deleted_dog).data
+                }
+            return Response(response_data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 class Welcome(generics.GenericAPIView):
     authentication_classes = [TokenAuthentication] 
