@@ -3,9 +3,10 @@ import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Auth, Home, Profile } from "./Screens";
+import { Auth, DogMap, Home, Order, Profile } from "./Screens";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Foundation from '@expo/vector-icons/Foundation';
 import { GlobalStyles } from "./constants/styles";
 
 import { Provider } from "react-redux";
@@ -36,6 +37,34 @@ export function NavigationCustom() {
             tabBarIcon: ({ color, size }) => (
               <AntDesign
                 name={'home'}
+                size={size}
+                color={color}
+              />
+            ),
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Dog"
+          component={DogMap}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Foundation
+                name="guide-dog"
+                size={size}
+                color={color}
+              />
+            ),
+            headerShown: false,
+          }}
+        />
+        <Tab.Screen
+          name="Order"
+          component={Order}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign
+                name='inbox'
                 size={size}
                 color={color}
               />
