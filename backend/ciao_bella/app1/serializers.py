@@ -97,6 +97,7 @@ class DogSerializer(serializers.ModelSerializer,TokenValidationMixin):
                 setattr(dog, field, validated_data[field])
         dog.save()
         return dog
+    
     def delete_dog(self,validated_data):
         user = self.validate_token()
         if not validated_data.get('id'):
@@ -108,6 +109,12 @@ class DogSerializer(serializers.ModelSerializer,TokenValidationMixin):
         dog.delete()
         return dog
 
+    def get_dog(self,request):
+        user = self.validate_token() 
+        dogs = Dog.objects.filter(owner=user.profile) 
+        if not dogs.exists(): 
+            raise serializers.ValidationError({'error': 'No dogs found.'}) 
+        return dogs
 
 
         

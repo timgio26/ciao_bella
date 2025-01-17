@@ -2,7 +2,9 @@ from rest_framework import generics,status
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
+
 from .serializers import UserNewSerializer,ProfileSerializer,DogSerializer
+
 from rest_framework.permissions import IsAuthenticated 
 from rest_framework.authentication import TokenAuthentication
 
@@ -98,6 +100,12 @@ class Dog(generics.GenericAPIView):
                 }
             return Response(response_data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self,request):
+        serializer = DogSerializer(context={'request': request}) 
+        dogs = serializer.get_dog(request)   ### serializer jalan di sini
+        serializer = DogSerializer(dogs, many=True) 
+        response_data = { 'message': 'Dogs retrieved successfully.', 'data': serializer.data } 
+        return Response(response_data, status=status.HTTP_200_OK)
 
 
 
