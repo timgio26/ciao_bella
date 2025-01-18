@@ -2,14 +2,23 @@ import { Text, View, StyleSheet, Pressable } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { GlobalStyles } from "../constants/styles";
 import Feather from "@expo/vector-icons/Feather";
+import {useNavigation} from '@react-navigation/native';
+import { type StackNavigation } from "../App";
+
 
 export function DogMap() {
+  const navigation = useNavigation<StackNavigation>()
+
+  function handleListView():void{
+    navigation.navigate("SitterList")
+  }
+
   return (
     <View style={styles.container}>
       <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
-        liteMode={true}
+        // liteMode={true}
         region={{
           latitude: 54.4416,
           longitude: 18.5601,
@@ -32,7 +41,7 @@ export function DogMap() {
         />
       </MapView>
       <View style={styles.floatingBtnContainer}>
-        <Pressable style={styles.floatingBtn}>
+        <Pressable style={({pressed})=>[styles.floatingBtn,pressed&&styles.pressed]} onPress={handleListView}>
           <Feather
             name="list"
             size={24}
@@ -73,5 +82,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     gap: 5,
     alignItems: "center",
+    elevation:3
   },
+  pressed:{
+    opacity:0.75
+  }
 });

@@ -1,9 +1,10 @@
 import React from "react";
 
 import { StatusBar } from "expo-status-bar";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer,NavigationProp} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Auth, DogMap, Home, Order, Profile } from "./Screens";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Auth, DogMap, Home, Order, Profile,SitterList,SitterDetail } from "./Screens";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Foundation from '@expo/vector-icons/Foundation';
@@ -13,8 +14,29 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import { useAppSelector } from "./hooks";
 
+
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+
+////////
+export type ScreenNames = ["DogMap", "SitterList","SitterDetail",'Home','Dog','Order','Profile','Auth'] // type these manually
+export type RootStackParamList = Record<ScreenNames[number], undefined>;
+export type StackNavigation = NavigationProp<RootStackParamList>;
+////////
+
+
+
+
+function DogTab(){
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="DogMap" component={DogMap} />
+      <Stack.Screen name="SitterList" component={SitterList} />
+      <Stack.Screen name="SitterDetail" component={SitterDetail} />
+    </Stack.Navigator>
+  );
+}
 export function NavigationCustom() {
   const user = useAppSelector((state)=>state.users.email)
   return (
@@ -46,7 +68,7 @@ export function NavigationCustom() {
         />
         <Tab.Screen
           name="Dog"
-          component={DogMap}
+          component={DogTab}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Foundation
