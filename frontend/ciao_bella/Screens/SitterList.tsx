@@ -1,5 +1,5 @@
 import {Text,View,StyleSheet, FlatList, ScrollView} from 'react-native'
-import { SitterTile } from './SitterTile';
+import { SitterTile } from '../components/SitterTile';
 
 export type dogsitter = {
     name: string;

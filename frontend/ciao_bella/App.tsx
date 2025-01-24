@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StatusBar } from "expo-status-bar";
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import { NavigationContainer,NavigationProp} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -33,7 +33,7 @@ function DogTab(){
   return (
     <Stack.Navigator screenOptions={{headerTitle:"",headerStyle:{backgroundColor:GlobalStyles.colors.primary100}}}>
       <Stack.Screen name="DogMap" component={DogMap} options={{headerShown:false}}/>
-      <Stack.Screen name="SitterList" component={SitterList} />
+      <Stack.Screen name="SitterList" component={SitterList}/>
       <Stack.Screen name="SitterDetail" component={SitterDetail} />
     </Stack.Navigator>
   );
