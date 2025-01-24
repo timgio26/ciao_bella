@@ -3,7 +3,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { SitterTilePotrait } from "../components/SitterTile";
 import { HowItWorks } from "../components/HowItWorks";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { GlobalStyles } from "../constants/styles";
 
 export function Home() {
   return (

@@ -14,18 +14,39 @@ import { GlobalStyles } from "./constants/styles";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { useAppSelector } from "./hooks";
+import { createStackNavigator } from "@react-navigation/stack";
 
 
-const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 
 ////////
-export type ScreenNames = ["DogMap", "SitterList","SitterDetail",'Home','Dog','Order','Profile','Auth'] // type these manually
-export type RootStackParamList = Record<ScreenNames[number], undefined>;
+// export type ScreenNames = ["DogMap", "SitterList","SitterDetail",'Home','Dog','Order','Profile','Auth'] // type these manually
+export type RootStackParamList = {
+  Home:undefined;
+  Dogmap:undefined;
+  SitterList:undefined;
+  SitterDetail:{
+    id:number|string
+  };
+  Dog:undefined;
+  Order:undefined;
+  Profile:{
+    id:string|number
+  };
+  Auth:undefined;
+}
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
+
 export type StackNavigation = NavigationProp<RootStackParamList>;
 ////////
 
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 
 

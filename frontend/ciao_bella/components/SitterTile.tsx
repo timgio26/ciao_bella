@@ -1,15 +1,23 @@
-import { Text, View, StyleSheet, Image } from 'react-native';
+import { Text, View, StyleSheet, Image, Pressable } from 'react-native';
 import { dogsitter } from '../Screens/SitterList';
 import { GlobalStyles } from '../constants/styles';
+import { useNavigation } from '@react-navigation/native';
+import { type StackNavigation } from "../App";
 
 type SitterTileProp = {
     data: dogsitter;
 };
 
 export function SitterTile({ data }: SitterTileProp) {
+  const navigation = useNavigation<StackNavigation>();
+
     const roundedRating = Math.round(data.rating)
+
+    function handlePress(){
+      navigation.navigate("SitterDetail",{id:data.id})
+    }
   return (
-    <View style={styles.container}>
+    <Pressable onPress={handlePress} style={({pressed})=>[styles.container,pressed&&{opacity:0.75}]}>
       <View style={styles.imgplaceholder}>
         <Text>no img</Text>
       </View>
@@ -22,7 +30,7 @@ export function SitterTile({ data }: SitterTileProp) {
         <Text style={styles.text}>{data.pricePerDay} PLN per day</Text>
         <Text style={styles.city}>{data.city}</Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 
