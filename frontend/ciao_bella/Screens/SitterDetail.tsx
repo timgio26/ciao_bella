@@ -1,16 +1,23 @@
-import { Text, View, StyleSheet, Image, Pressable } from "react-native";
+import { Text, View, StyleSheet, Image, Pressable, ScrollView } from "react-native";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "../App";
-import { dogSitters } from "./SitterList";
+import { dogSitters,ReviewList} from "../utils/fakeDB";
 import { GlobalStyles } from "../constants/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import { ReviewTile } from "../components/ReviewTile";
+import { useState } from "react";
 
 type SitterDetailRouteProp = RouteProp<RootStackParamList, "SitterDetail">;
 
 export function SitterDetail() {
   const route = useRoute<SitterDetailRouteProp>();
+  const [liked,setLiked] = useState<boolean>(false)
+  console.log(liked)
+
   const { id } = route.params;
+
   const dogSitterDtl = dogSitters.filter((each) => each.id === id)[0];
+
   return (
     <View>
       <View style={styles.imgInfoCnt}>
@@ -21,8 +28,8 @@ export function SitterDetail() {
               style={styles.imgProf}
             />
           </View>
-          <Pressable style={styles.loveCnt}>
-            <AntDesign name="heart" size={30} color={"#ededed"} />
+          <Pressable style={styles.loveCnt} onPress={()=>setLiked((state)=>!state)}>
+            <AntDesign name="heart" size={30} color={liked?"red":"#ededed"} />
           </Pressable>
         </View>
         <Text style={styles.header1}>{dogSitterDtl.name}</Text>
@@ -34,7 +41,10 @@ export function SitterDetail() {
           </Text>
         </View>
       </View>
-      <Text>Review</Text>
+      <View style={{gap:10,backgroundColor:"green"}}>
+        <Text style={{fontSize:20,fontWeight:"bold",textAlign:"center",marginVertical:15}}>Review</Text>
+        {ReviewList.map((each)=><ReviewTile data={each} key={each.review_id}/>)}
+      </View>
     </View>
   );
 }

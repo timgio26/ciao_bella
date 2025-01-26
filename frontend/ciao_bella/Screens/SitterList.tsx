@@ -1,126 +1,109 @@
-import { Text, View, StyleSheet, FlatList, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TextInput,
+  Pressable,
+  Text,
+} from "react-native";
 import { SitterTile } from "../components/SitterTile";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import { GlobalStyles } from "../constants/styles";
+import { useEffect, useState } from "react";
+import {dogsitter,dogSitters} from '../utils/fakeDB'
+import Entypo from "@expo/vector-icons/Entypo";
+import OptionModals from "../components/OptionModals";
 
-export type dogsitter = {
-  id: string;
-  name: string;
-  rating: number;
-  profileUrl: string;
-  city: string;
-  description: string;
-  pricePerDay: number;
-};
 
-export const dogSitters: dogsitter[] = [
-  {
-    id: "1",
-    name: "Justyna Kowalska",
-    rating: 4.5,
-    profileUrl: "https://dog-sitter.com/justyna",
-    city: "Sopot",
-    description:
-      "Friendly and experienced dog lover providing personalized dog sitting services in Sopot.",
-    pricePerDay: 30,
-  },
-  {
-    id: "2",
-    name: "Marcin Lewandowski",
-    rating: 4.3,
-    profileUrl: "https://petsitting.com/marcin",
-    city: "Gdansk",
-    description:
-      "Reliable pet sitter with a passion for dogs, available for both short and long-term assignments.",
-    pricePerDay: 35,
-  },
-  {
-    id: "3",
-    name: "Anna Nowak",
-    rating: 4.7,
-    profileUrl: "https://dogcare.com/anna",
-    city: "Sopot",
-    description:
-      "Offering professional and nurturing dog sitting services, ensuring your pet feels at home.",
-    pricePerDay: 32,
-  },
-  {
-    id: "4",
-    name: "Piotr Zielinski",
-    rating: 4.0,
-    profileUrl: "https://pets.com/piotr",
-    city: "Gdansk",
-    description:
-      "Dedicated dog sitter with years of experience, committed to providing the best care for your furry friend.",
-    pricePerDay: 28,
-  },
-  {
-    id: "5",
-    name: "Katarzyna Wisniewska",
-    rating: 4.6,
-    profileUrl: "https://pupsitter.com/kasia",
-    city: "Gdynia",
-    description:
-      "Enthusiastic dog lover offering reliable and loving dog sitting services in Gdynia.",
-    pricePerDay: 34,
-  },
-  {
-    id: "6",
-    name: "Tomasz Kaczmarek",
-    rating: 3.9,
-    profileUrl: "https://dogwalker.com/tomasz",
-    city: "Gdynia",
-    description:
-      "Trustworthy dog sitter with a focus on providing a safe and enjoyable experience for your pet.",
-    pricePerDay: 29,
-  },
-  {
-    id: "7",
-    name: "Magdalena Baran",
-    rating: 4.4,
-    profileUrl: "https://petsitting.com/magdalena",
-    city: "Gdansk",
-    description:
-      "Experienced and compassionate dog sitter, ensuring your pet is well taken care of and happy.",
-    pricePerDay: 31,
-  },
-  {
-    id: "8",
-    name: "Bartosz Wojcik",
-    rating: 3.8,
-    profileUrl: "https://dogcare.com/bartosz",
-    city: "Sopot",
-    description:
-      "Reliable and friendly dog sitter offering personalized care and attention for your dog.",
-    pricePerDay: 27,
-  },
-  {
-    id: "9",
-    name: "Ewa Szymanska",
-    rating: 4.2,
-    profileUrl: "https://dog-sitting.com/ewa",
-    city: "Gdynia",
-    description:
-      "Professional dog sitter with a love for animals, providing top-notch care for your pets.",
-    pricePerDay: 33,
-  },
-  {
-    id: "10",
-    name: "Pawel Marek",
-    rating: 4.1,
-    profileUrl: "https://petsitting.com/pawel",
-    city: "Sopot",
-    description:
-      "Dedicated dog sitter with a focus on creating a comfortable and loving environment for your pet.",
-    pricePerDay: 30,
-  },
-];
 
 export function SitterList() {
+  const [search, setSearch] = useState<string>();
+  const [filtered, setFiltered] = useState<dogsitter[]>(dogSitters);
+  const [mdlVis, setMdlVis] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (search) {
+      setFiltered(
+        filtered.filter((each) => each.name.toLowerCase().includes(search))
+      );
+    } else {
+      setFiltered(dogSitters);
+    }
+  }, [search]);
+
+  function handleSearchInput(input: string) {
+    setSearch(input);
+  }
+
+  // function handleSearchBtn(){
+  //   // console.log(search)
+  //   if(search) {
+  //     setFiltered(filtered.filter((each)=>each.name.toLowerCase().includes(search)))
+  //   }
+  //   else{
+  //     setFiltered(dogSitters)
+  //   }
+  // }
+
   return (
-    <ScrollView>
-      {dogSitters.map((each, index) => {
-        return <SitterTile key={index} data={each} />;
-      })}
-    </ScrollView>
+    <View>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={{ flexGrow: 1, fontSize: 16 }}
+          onChangeText={handleSearchInput}
+          value={search}
+        />
+        <View
+          style={{ paddingHorizontal: 10, paddingVertical: 8 }}
+          // onPress={handleSearchBtn}
+        >
+          <AntDesign
+            name="search1"
+            size={24}
+            color={GlobalStyles.colors.primary400}
+          />
+        </View>
+      </View>
+      {/* <View
+
+      >
+        <Picker
+          selectedValue={selectedLanguage}
+          onValueChange={(itemValue) => setSelectedLanguage(itemValue)}
+          style={{ backgroundColor: "green", display: "flex" }}
+        >
+          <Picker.Item label="Java" value="java" />
+          <Picker.Item label="JavaScript" value="js" />
+        </Picker>
+      </View> */}
+
+      {/* <RNPickerSelect
+      onValueChange={(value) => console.log(value)}
+      items={[
+        { label: 'Football', value: 'football' },
+        { label: 'Baseball', value: 'baseball' },
+        { label: 'Hockey', value: 'hockey' },
+      ]}        
+      style={{}}
+    /> */}
+
+      <View style={{ margin: 10, flexDirection: "row" }}>
+        <Pressable style={styles.sortByCntr} onPress={()=>setMdlVis(true)}>
+          <Text>Sort by</Text>
+          <Entypo name="chevron-small-down" size={24} color="black" />
+        </Pressable>
+      </View>
+      <ScrollView>
+        {filtered.map((each, index) => {
+          return <SitterTile key={index} data={each} />;
+        })}
+      </ScrollView>
+      <OptionModals isVisible={mdlVis} onClose={() => setMdlVis(false)}>
+        <View><Text>Option1</Text></View>
+        <View><Text>Option2</Text></View>
+        <View><Text>Option3</Text></View>
+      </OptionModals>
+    </View>
   );
 }
 
@@ -128,5 +111,25 @@ const styles = StyleSheet.create({
   header1: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginVertical: 9,
+    paddingHorizontal: 10,
+    paddingVertical: 1,
+    gap: 10,
+    borderWidth: 2,
+    margin: 10,
+    borderColor: GlobalStyles.colors.primary400,
+    borderRadius: 10,
+  },
+  sortByCntr: {
+    alignItems: "center",
+    flexDirection: "row",
+    backgroundColor: GlobalStyles.colors.primary100,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 99,
   },
 });

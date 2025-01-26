@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet, Image, Pressable } from 'react-native';
-import { dogsitter } from '../Screens/SitterList';
+import { dogsitter } from '../utils/fakeDB';
 import { GlobalStyles } from '../constants/styles';
 import { useNavigation } from '@react-navigation/native';
 import { type StackNavigation } from "../App";
