@@ -3,20 +3,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { SitterTilePotrait } from "../components/SitterTile";
 import { HowItWorks } from "../components/HowItWorks";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import {dogSitters} from "../utils/fakeDB"
 
 export function Home() {
   return (
     <SafeAreaView>
-      <View>
+      <ScrollView>
         <View>
             <Image source={require("../assets/banner.png")}/>
         </View>
         <Text style={styles.header1}>Feature Dog Sitters</Text>
         <ScrollView style={styles.featuredContainer} horizontal={true} showsHorizontalScrollIndicator={false}>
-            <SitterTilePotrait/>
-            <SitterTilePotrait/>
-            <SitterTilePotrait/>
-            <SitterTilePotrait/>
+            {
+              dogSitters.slice(0,3).map((each)=><SitterTilePotrait data={each} key={each.id}/>)
+            }
         </ScrollView>
         <Text style={styles.header1}>How It Works</Text>
         <HowItWorks/>
@@ -28,7 +28,7 @@ export function Home() {
             </View>
         </Pressable>
         
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

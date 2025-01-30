@@ -5,7 +5,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import { NavigationContainer,NavigationProp} from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Auth, DogMap, Home, Order, Profile,SitterList,SitterDetail } from "./Screens";
+import { Auth, DogMap, Home, Order, Profile,SitterList,SitterDetail,CreateOrder } from "./Screens";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Foundation from '@expo/vector-icons/Foundation';
@@ -14,7 +14,8 @@ import { GlobalStyles } from "./constants/styles";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import { useAppSelector } from "./hooks";
-import { createStackNavigator } from "@react-navigation/stack";
+// import { createStackNavigator } from "@react-navigation/stack";
+// import { SafeAreaView } from "react-native";
 
 
 
@@ -34,6 +35,7 @@ export type RootStackParamList = {
     id:string|number
   };
   Auth:undefined;
+  CreateOrder:undefined
 }
 
 declare global {
@@ -56,12 +58,14 @@ function DogTab(){
       <Stack.Screen name="DogMap" component={DogMap} options={{headerShown:false}}/>
       <Stack.Screen name="SitterList" component={SitterList}/>
       <Stack.Screen name="SitterDetail" component={SitterDetail} />
+      <Stack.Screen name='CreateOrder' component={CreateOrder}/>
     </Stack.Navigator>
   );
 }
 export function NavigationCustom() {
   const user = useAppSelector((state)=>state.users.email)
   return (
+
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
@@ -124,7 +128,7 @@ export function NavigationCustom() {
           options={{
             tabBarIcon: ({ color }) => (
               <AntDesign
-                name={user ? "user" : "login"}
+                name={"user"}
                 size={30}
                 color={color}
               />
@@ -134,6 +138,7 @@ export function NavigationCustom() {
         />
       </Tab.Navigator>
     </NavigationContainer>
+
   );
 }
 
@@ -141,12 +146,12 @@ export default function App() {
   return (
     <>
       <StatusBar/>
-      <SafeAreaProvider>
 
       <Provider store={store}>
+      <SafeAreaProvider>
         <NavigationCustom />
-      </Provider>
       </SafeAreaProvider>
+      </Provider>
     </>
   );
 }

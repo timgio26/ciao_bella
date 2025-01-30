@@ -143,6 +143,74 @@ export type dogsitter = {
       "review": "Great sitter! My dog felt safe and happy.",
       "customer_name": "Marek Wiśniewski",
       "order_date": "2025-01-15"
+    },
+    {
+      "review_id": "004",
+      "rating": 5,
+      "review": "Great sitter! My dog felt safe and happy.",
+      "customer_name": "Marek Wiśniewski",
+      "order_date": "2025-01-15"
     }
   ]
+
+
+export type Orderdb = {
+  order_id: string;
+  order_status: "active"|"canceled"|"finished";
+  order_start_date: Date;
+  order_end_date: Date;
+  dogsitter_name: string;
+  num_of_dog: number;
+  total_price: number;
+}
+
+export let ordersdb:Orderdb[] = [
+  {
+    order_id: "#20240125121212123",
+    order_status: "active",
+    order_start_date: new Date("2025-01-15"),
+    order_end_date: new Date("2025-01-20"),
+    dogsitter_name: "Jan Kowalski",
+    num_of_dog: 2,
+    total_price: 150
+  },
+  {
+    order_id: "#20240125121212124",
+    order_status: "finished",
+    order_start_date: new Date("2025-01-10"),
+    order_end_date: new Date("2025-01-15"),
+    dogsitter_name: "Maria Nowak",
+    num_of_dog: 1,
+    total_price: 75
+  },
+  {
+    order_id: "#20240125121212125",
+    order_status: "canceled",
+    order_start_date: new Date("2025-01-05"),
+    order_end_date: new Date("2025-01-10"),
+    dogsitter_name: "Anna Zielińska",
+    num_of_dog: 3,
+    total_price: 225
+  },
+  {
+    order_id: "#20240125121212126",
+    order_status: "active",
+    order_start_date: new Date("2025-01-18"),
+    order_end_date: new Date("2025-01-23"),
+    dogsitter_name: "Michał Wiśniewski",
+    num_of_dog: 2,
+    total_price: 150
+  },
+  {
+    order_id: "#20240125121212127",
+    order_status: "finished",
+    order_start_date: new Date("2025-01-02"),
+    order_end_date: new Date("2025-01-07"),
+    dogsitter_name: "Anna Kwiatkowska",
+    num_of_dog: 1,
+    total_price: 75
+  }
+];
+  
+  
   

@@ -1,25 +1,34 @@
 import { Text, View, StyleSheet, Image, Pressable, ScrollView } from "react-native";
-import { RouteProp, useRoute } from "@react-navigation/native";
+import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { RootStackParamList } from "../App";
 import { dogSitters,ReviewList} from "../utils/fakeDB";
 import { GlobalStyles } from "../constants/styles";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { ReviewTile } from "../components/ReviewTile";
 import { useState } from "react";
+import { FloatingBtn } from "../components/FloatingBtn";
 
 type SitterDetailRouteProp = RouteProp<RootStackParamList, "SitterDetail">;
 
 export function SitterDetail() {
   const route = useRoute<SitterDetailRouteProp>();
+  const navigation = useNavigation()
   const [liked,setLiked] = useState<boolean>(false)
-  console.log(liked)
+  // console.log(liked)
 
   const { id } = route.params;
 
   const dogSitterDtl = dogSitters.filter((each) => each.id === id)[0];
 
+  function handleBook(){
+    console.log('book')
+    navigation.navigate("CreateOrder")
+  }
+
   return (
-    <View>
+    <View >
+
+    <ScrollView>
       <View style={styles.imgInfoCnt}>
         <View style={styles.imgLoveCnt}>
           <View style={styles.imgProfileCnt}>
@@ -41,10 +50,20 @@ export function SitterDetail() {
           </Text>
         </View>
       </View>
-      <View style={{gap:10,backgroundColor:"green"}}>
+      {/* <View> */}
+      <View style={{gap:10,paddingBottom:45}}>
         <Text style={{fontSize:20,fontWeight:"bold",textAlign:"center",marginVertical:15}}>Review</Text>
         {ReviewList.map((each)=><ReviewTile data={each} key={each.review_id}/>)}
       </View>
+      {/* </View> */}
+
+      
+    </ScrollView>
+    <View style={{alignItems:'center'}}>
+      {/* <Text>hello</Text> */}
+
+      <FloatingBtn label="Book" onpress={handleBook}/>
+    </View>
     </View>
   );
 }

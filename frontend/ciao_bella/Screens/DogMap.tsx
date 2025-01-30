@@ -4,6 +4,7 @@ import { GlobalStyles } from "../constants/styles";
 import Feather from "@expo/vector-icons/Feather";
 import {useNavigation} from '@react-navigation/native';
 import { type StackNavigation } from "../App";
+import { FloatingBtn } from "../components/FloatingBtn";
 
 
 export function DogMap() {
@@ -40,17 +41,24 @@ export function DogMap() {
           }}
         />
       </MapView>
-      <View style={styles.floatingBtnContainer}>
-        <Pressable style={({pressed})=>[styles.floatingBtn,pressed&&styles.pressed]} onPress={handleListView}>
+      <FloatingBtn
+        label="List View"
+        onpress={handleListView}
+        icon={
           <Feather
             name="list"
             size={24}
             color={GlobalStyles.colors.primary400}
           />
+        }
+      />
+      {/* <View style={styles.floatingBtnContainer}>
+        <Pressable style={({pressed})=>[styles.floatingBtn,pressed&&styles.pressed]} onPress={handleListView}>
+
 
           <Text>List View</Text>
         </Pressable>
-      </View>
+      </View> */}
     </View>
   );
 }

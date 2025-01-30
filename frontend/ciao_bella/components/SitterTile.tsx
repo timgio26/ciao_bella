@@ -34,25 +34,43 @@ export function SitterTile({ data }: SitterTileProp) {
   );
 }
 
+type SitterTilePotraitProp = {
+  data:dogsitter
+}
 
-export function SitterTilePotrait(){
-  return(
+
+export function SitterTilePotrait({data}:SitterTilePotraitProp){
+  return (
     <View style={styles.tilePotrait}>
-      <View style={{position:"relative"}}>
-        <View style={styles.imgContainer}>
-        <Image source={require("../assets/profile-basic.png")} style={styles.imgProfile}/>
-        </View>
-        <View style={[styles.ratingContainer,{position:'absolute',right:10,bottom:0}]}>
-          <Text>4.5</Text>
+
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View style={{ position: "relative" }}>
+          <View style={styles.imgContainer}>
+            <Image
+              source={require("../assets/profile-basic.png")}
+              style={styles.imgProfile}
+            />
+          </View>
+          <View
+            style={[
+              styles.ratingContainer,
+              { position: "absolute", right: 10, bottom: 0 },
+            ]}
+          >
+            <Text>{data.rating}</Text>
+          </View>
         </View>
       </View>
-      <Text style={styles.name}>Name</Text>
-      <View style={{flexDirection:'row', justifyContent:"space-between"}}>
-        <Text>City</Text>
-        <Text>price</Text>
+
+      <Text style={styles.name}>{data.name}</Text>
+
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text>{data.city}</Text>
+        <Text>{data.pricePerDay} PLN</Text>
       </View>
+
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -77,6 +95,9 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: "bold",
+    // flex:1,
+    // overflow:'hidden'
+    
     // marginBottom: 5,
   },
   city: {
@@ -109,7 +130,10 @@ const styles = StyleSheet.create({
     borderColor: GlobalStyles.colors.primary400,
     padding:10,
     marginHorizontal:5,
-    borderRadius:10
+    borderRadius:10,
+    width:155,
+    height:200,
+    justifyContent:'space-between'
   },
   imgContainer: {
     width: 120,
