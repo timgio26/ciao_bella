@@ -1,7 +1,7 @@
-import { View, Text } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { Orderdb } from "../utils/fakeDB";
 import { GlobalStyles } from "../constants/styles";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
 type OrderTileProp = {
   data: Orderdb;
@@ -9,22 +9,10 @@ type OrderTileProp = {
 
 export function OrderTile({ data }: OrderTileProp) {
   return (
-    <View
-      style={{
-        borderWidth: 2,
-        marginVertical: 5,
-        marginHorizontal: 10,
-        paddingVertical: 10,
-        paddingHorizontal:15,
-        borderRadius: 20,
-        borderColor: GlobalStyles.colors.primary400,
-        elevation:2,
-        backgroundColor:"white"
-      }}
-    >
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={{fontWeight:"900",color:GlobalStyles.colors.primary400}}>{data.order_id}</Text>
-        <Text>{data.order_status}</Text>
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <Text style={styles.orderId}>{data.order_id}</Text>
+        <Text style={data.order_status=='active'?{fontWeight:"900",color:'green'}:{fontWeight:"900",color:'gray'}}>{data.order_status.toUpperCase()}</Text>
       </View>
 
       <Text>
@@ -35,9 +23,34 @@ export function OrderTile({ data }: OrderTileProp) {
       <Text>Dog sitter: {data.dogsitter_name}</Text>
       <Text>for {data.num_of_dog} dog(s)</Text>
 
-      <Text style={{ textAlign: "right", fontWeight: "900", fontSize: 20 }}>
-        Total: {data.total_price}zl
-      </Text>
+      <Text style={styles.totalPrice}>Total: {data.total_price}zl</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    borderWidth: 2,
+    marginVertical: 5,
+    marginHorizontal: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    borderColor: GlobalStyles.colors.primary400,
+    elevation: 2,
+    backgroundColor: "white",
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  orderId: {
+    fontWeight: "900",
+    color: GlobalStyles.colors.primary400,
+  },
+  totalPrice: {
+    textAlign: "right",
+    fontWeight: "900",
+    fontSize: 20,
+  },
+});

@@ -40,8 +40,12 @@ type SitterTilePotraitProp = {
 
 
 export function SitterTilePotrait({data}:SitterTilePotraitProp){
+  const navigation = useNavigation<StackNavigation>()
+  function handlePress(){
+    navigation.navigate("Dog")
+  }
   return (
-    <View style={styles.tilePotrait}>
+    <Pressable style={styles.tilePotrait} onPress={handlePress}>
 
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <View style={{ position: "relative" }}>
@@ -69,7 +73,7 @@ export function SitterTilePotrait({data}:SitterTilePotraitProp){
         <Text>{data.pricePerDay} PLN</Text>
       </View>
 
-    </View>
+    </Pressable>
   );
 }
 

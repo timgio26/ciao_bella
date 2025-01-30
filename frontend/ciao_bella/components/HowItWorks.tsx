@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems:'center',
     justifyContent:'center',
-    marginVertical:10
+    marginVertical:10,
+    paddingHorizontal:10
   },
   flowCircle1: {
     height: 100,
